@@ -29,7 +29,7 @@ class jasonshort(Stock):
         self.stockdayline['goldif'] = (self.stockdayline['5dma'] > self.stockdayline['10dma']) & (self.stockdayline['5dma'].shift(1) < self.stockdayline['10dma'].shift(1))
         #前13天均线无交叉
         self.stockdayline['crossiftmp'] = ((self.stockdayline['5dma'] - self.stockdayline['10dma']) * (self.stockdayline['5dma'].shift(1) - self.stockdayline['10dma'].shift(1))) < 0
-        self.stockdayline['crossif'] = (self.stockdayline['crossiftmp'].rolling(center=False,window=13).sum() == 0)
+        self.stockdayline['crossif'] = (self.stockdayline['crossiftmp'].shift(1).rolling(center=False,window=13).sum() == 0)
         #MACD>-0.01
         self.stockdayline['macdif'] = (self.stockdayline['macd'] > -0.01)
         #MACD背离
@@ -54,10 +54,23 @@ def main():
             pass
     file.close()
 
-a=jasonshort('002797')
-a.test()
-a.stockdayline.to_csv('a.csv')
+def main2():
+    file2 = open('jasonshorttoday.log','w')
+    today = '2016-10-28 00:00:00'#2016-10-25'
+    for code in depickle_stock_list():
+        try:
+            a=jasonshort(code)
+            a.test()
+            b=a.stockdayline[a.stockdayline['yz']==True]['yz']
+            if (str(b[-1:].index[0])) == today:
+                file2.write(code+'\n')
+        except:
+            pass
+    file2.close()
+#a=jasonshort('002797')
+#a.test()
+#a.stockdayline.to_csv('b.csv')
 
     
-#main()
+main2()
     
