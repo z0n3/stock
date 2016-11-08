@@ -1,8 +1,11 @@
+import os
 import sys
 sys.path.append("..")
 from getstocklist import getstocklist
 from getstockdayline import getstockdayline
 from core import depickle_stock_list
+from core import get_stock_market
+from conf import stock_day_line_file
 
 
 
@@ -16,6 +19,13 @@ def main():
     
 def main2():
     stocklist = ['601186']
+    #删除出错文件
+    for code in (stocklist):
+        prefix = get_stock_market(code)
+        file = stock_day_line_file + prefix + code + '.csv'
+        if os.path.exists(file):
+            os.remove(file)
+            print('del '+file)
     getstockdayline(stocklist)
     print('[+]股票日线数据更新完毕')    
 
