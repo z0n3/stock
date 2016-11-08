@@ -5,6 +5,7 @@ from core import Stock
 from core import depickle_stock_list
 from core import get_stock_market
 from teststrategy import teststrategy
+from teststrategy import holdgainloss
 
 
 #temp
@@ -59,36 +60,26 @@ def main():
     file.close()
     file2.close()
     
-    
-def main3():
-    file = open('allcodejasonshort.log','w')
+
+def holdmaxgainloss():
+    file = open('holdgainloss.log','w')
     for code in depickle_stock_list():
-        try:
-            a=jasonshort(code)
-            a.test()
-            b=a.stockdayline[a.stockdayline['yz']==True]['yz']
-            file.write(code+'\n'+str(b)+'\n\n')
-        except Exception as e:
-            pass
+        if get_stock_market(code) in ['sh','sz']:
+            try:
+                a=jasonshort(code)
+                a.test()
+                b=holdgainloss(a.stockdayline)
+                file.write(code+'\n'+str(b)+'\n\n')                
+                #b.to_csv('a.csv')
+            except Exception as e:
+                #pass                
+                print(code,e)
     file.close()
 
-def main2():
-    file2 = open('jasonshorttoday.log','w')
-    today = '2016-10-28 00:00:00'#2016-10-25'
-    for code in depickle_stock_list():
-        try:
-            a=jasonshort(code)
-            a.test()
-            b=a.stockdayline[a.stockdayline['yz']==True]['yz']
-            if (str(b[-1:].index[0])) == today:
-                file2.write(code+'\n')
-        except:
-            pass
-    file2.close()
 #a=jasonshort('002797')
 #a.test()
 #a.stockdayline.to_csv('b.csv')
 
     
-main()
+holdmaxgainloss()
     

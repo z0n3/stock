@@ -4,6 +4,7 @@ def teststrategy(data,stopgain=0.05,stoploss=-0.02,holdday=3):
     '''
     至少包含以下字段
     ['date','open','high','close','low','vol','amount','yz']
+    返回止盈上损持有天数的收益结果
     '''
     #设置盈亏
     data['buy']=data['open'].shift(-1)
@@ -29,3 +30,8 @@ def teststrategy(data,stopgain=0.05,stoploss=-0.02,holdday=3):
     data.loc[data['gainorloss'] == 'tobeyz','gainorloss']  = data['close/buy3']
 
     return(data[data['yz']==True]['gainorloss'])
+    
+def holdgainloss(data,holdday=20):
+    data['holdmaxgain'] = data['high'].shift(-holdday).rolling(center=False,window=holdday).max() / data['open'].shift(-1) - 1
+    data['holdmaxloss'] = data['low'].shift(-holdday).rolling(center=False,window=holdday).min() / data['open'].shift(-1) - 1
+    return(data[data['yz']==True][['holdmaxgain','holdmaxloss']])
