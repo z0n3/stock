@@ -38,14 +38,12 @@ class jasonshort(Stock):
         del self.stockdayline['minclose'] 
         del self.stockdayline['minmacd'] 
         
-        
-        #前13天收盘跌超过15%
-        self.stockdayline['downif'] = (self.stockdayline['low'].shift(1).rolling(center=False,window=13).min() / self.stockdayline['high'].shift(1).rolling(center=False,window=13).max() <= 0.85)
-        #当天收阳
-        self.stockdayline['upif'] = (self.stockdayline['close'] > self.stockdayline['close'].shift(1))
+        #前13天收盘跌超过30%
+        self.stockdayline['downif'] = (self.stockdayline['low'].shift(1).rolling(center=False,window=13).min() / self.stockdayline['high'].shift(1).rolling(center=False,window=13).max() <= 0.70)
+
         
         #
-        self.stockdayline['yz'] = (self.stockdayline['goldif'] & self.stockdayline['crossif'] & self.stockdayline['macdif'] & self.stockdayline['beiliif'])
+        self.stockdayline['yz'] = (self.stockdayline['goldif'] & self.stockdayline['crossif'] & self.stockdayline['macdif'] & self.stockdayline['downif'] & self.stockdayline['beiliif'])
         
 
 def main():
@@ -88,5 +86,5 @@ def holdmaxgainloss():
 #a.stockdayline.to_csv('b.csv')
 
     
-holdmaxgainloss()
+main()
     
