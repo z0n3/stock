@@ -28,7 +28,7 @@ class jasonshort(Stock):
         #前13天均线无交叉
         self.stockdayline['crossiftmp'] = ((self.stockdayline['5dma'] - self.stockdayline['10dma']) * (self.stockdayline['5dma'].shift(1) - self.stockdayline['10dma'].shift(1))) < 0
         self.stockdayline['crossif'] = (self.stockdayline['crossiftmp'].shift(1).rolling(center=False,window=13).sum() == 0)
-        del self.stockdayline['crossiftmp']     
+        del self.stockdayline['crossiftmp']
         #MACD>-0.01
         self.stockdayline['macdif'] = (self.stockdayline['macd'] > -0.01)
         #MACD背离
@@ -37,6 +37,13 @@ class jasonshort(Stock):
         self.stockdayline['beiliif'] = ((self.stockdayline['minclose'] - self.stockdayline['minmacd']) > 2)
         del self.stockdayline['minclose'] 
         del self.stockdayline['minmacd'] 
+        
+        
+        #前13天收盘跌超过15%
+        self.stockdayline['downif'] = (self.stockdayline['low'].shift(1).rolling(center=False,window=13).min() / self.stockdayline['high'].shift(1).rolling(center=False,window=13).max() <= 0.85)
+        #当天收阳
+        self.stockdayline['upif'] = (self.stockdayline['close'] > self.stockdayline['close'].shift(1))
+        
         #
         self.stockdayline['yz'] = (self.stockdayline['goldif'] & self.stockdayline['crossif'] & self.stockdayline['macdif'] & self.stockdayline['beiliif'])
         
@@ -76,7 +83,7 @@ def holdmaxgainloss():
                 print(code,e)
     file.close()
 
-#a=jasonshort('002797')
+#a=jasonshort('002233')
 #a.test()
 #a.stockdayline.to_csv('b.csv')
 
