@@ -1,15 +1,16 @@
 import pandas as pd
+import datetime
 import sys
 sys.path.append("..")
 from core import Stock
 from core import depickle_stock_list
 from core import get_stock_market
-from teststrategy import teststrategy
-from teststrategy import holdgainloss
+#from teststrategy import teststrategy
+#from teststrategy import holdgainloss
 
 
 #temp
-stocklist = ['601218','601933']
+stocklist = ['002795','300519']
 
 class jasonshort(Stock):
     '''
@@ -37,15 +38,36 @@ class jasonshort(Stock):
         self.stockdayline['beiliif'] = ((self.stockdayline['minclose'] - self.stockdayline['minmacd']) > 2)
         del self.stockdayline['minclose'] 
         del self.stockdayline['minmacd'] 
-        
-        #前13天收盘跌超过30%
-        self.stockdayline['downif'] = (self.stockdayline['low'].shift(1).rolling(center=False,window=13).min() / self.stockdayline['high'].shift(1).rolling(center=False,window=13).max() <= 0.70)
+        #前60天收盘跌超过30%
+        self.stockdayline['downif'] = (self.stockdayline['close'].shift(1).rolling(center=False,window=60).min() / self.stockdayline['close'].shift(1).rolling(center=False,window=60).max() <= 0.70)
 
-        
         #
         self.stockdayline['yz'] = (self.stockdayline['goldif'] & self.stockdayline['crossif'] & self.stockdayline['macdif'] & self.stockdayline['downif'] & self.stockdayline['beiliif'])
         
-
+def runjasonshort():
+    file = open('runjasonshort.log','w')
+    strtoday = datetime.datetime.now().strftime('%Y%m%d')
+    today = pd.Timestamp(strtoday)
+    print('Jasonshort output at ' + strtoday + ':\n')
+    file.write('Jasonshort output at ' + strtoday + ':\n')
+    for code in depickle_stock_list():
+        if get_stock_market(code) in ['sh','sz']:
+            try:
+                a=jasonshort(code)
+                a.test()
+                b=a.stockdayline[a.stockdayline['yz']==True]['yz']
+                b=b.reset_index()
+                b['span'] = (today - b['date']) < datetime.timedelta(days=28)
+                c=b[b['span']==True]['date']
+                if (len(c)>0):
+                    print(code+','+str(c[0])[:11]+'\n')
+                    file.write(code+','+str(c[0])[:11]+'\n')
+            except Exception as e:
+                pass
+    file.close()
+    
+'''
+#test    
 def main():
     file = open('jasonshortmain.log','w')
     file2 = open('jasonshortmaindetail.log','w')
@@ -81,10 +103,17 @@ def holdmaxgainloss():
                 print(code,e)
     file.close()
 
-#a=jasonshort('002233')
-#a.test()
-#a.stockdayline.to_csv('b.csv')
-
     
-main()
+#today = pd.Timestamp(datetime.datetime.now().strftime('%Y%m%d'))
+#a=jasonshort('000895')
+#a.test()
+#b=a.stockdayline[a.stockdayline['yz']==True]['yz']
+#b=b.reset_index()
+#b['span'] = (today - b['date']) < datetime.timedelta(days=14)
+#print(b)
+#a.stockdayline.to_csv('b.csv')
+#b=a.stockdayline[a.stockdayline['yz']==True]['yz']
+    
+'''
+#runjasonshort()
     

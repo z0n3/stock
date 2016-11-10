@@ -81,7 +81,7 @@ def getstockdayline(stocklist):
                         break
             except Exception as e:
                 error_file.write(code+'\n')
-                print(e)
+                #print(e)
                 error_file.flush()
             #重新排序
             alldata = csv.reader(open(file),delimiter=',')

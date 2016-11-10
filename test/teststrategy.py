@@ -34,5 +34,6 @@ def teststrategy(data,stopgain=0.05,stoploss=-0.02,holdday=3):
 def holdgainloss(data,holdday=20):
     data['holdmaxgain'] = data['high'].shift(-holdday).rolling(center=False,window=holdday).max() / data['open'].shift(-1) - 1
     data['holdmaxloss'] = data['low'].shift(-holdday).rolling(center=False,window=holdday).min() / data['open'].shift(-1) - 1
-    data['60updown'] = data['close'].rolling(center=False,window=60).min() / data['close'].rolling(center=False,window=60).max() - 1
-    return(data[data['yz']==True][['holdmaxgain','holdmaxloss','downif','upif','60updown']])
+    #data['60updown'] = data['close'].rolling(center=False,window=60).min() / data['close'].rolling(center=False,window=60).max() - 1
+
+    return(data[data['yz']==True][['holdmaxgain','holdmaxloss']])
