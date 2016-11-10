@@ -57,7 +57,7 @@ def runjasonshort():
                 a.test()
                 b=a.stockdayline[a.stockdayline['yz']==True]['yz']
                 b=b.reset_index()
-                b['span'] = (today - b['date']) < datetime.timedelta(days=28)
+                b['span'] = (today - b['date']) < datetime.timedelta(days=14)
                 c=b[b['span']==True]['date']
                 if (len(c)>0):
                     print(code+','+str(c[0])[:11]+'\n')
