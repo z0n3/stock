@@ -1,5 +1,7 @@
 from datetime import datetime
 import time
+import shlex
+import subprocess
 import os
 import sys
 sys.path.append("..")
@@ -49,3 +51,12 @@ print('[+]纠错完成，开始计算jasonshort策略... ...')
 #计算jasonshort策略
 jasonshortmain.runjasonshort()
 print('[+]完毕')
+
+#git部分
+cwd = "D:\\Users\\zhouyu835\\Downloads\\git\\stock"
+cmd = "git add -A"
+subprocess.check_output(shlex.split(cmd), cwd=cwd)
+cmd = "git commit -m 'test'"
+subprocess.check_output(shlex.split(cmd), cwd=cwd)
+cmd = "git push origin master"
+subprocess.check_output(shlex.split(cmd), cwd=cwd)
