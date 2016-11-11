@@ -56,7 +56,7 @@ print('[+]完毕')
 cwd = "D:\\Users\\zhouyu835\\Downloads\\git\\stock"
 cmd = "git add -A"
 subprocess.check_output(shlex.split(cmd), cwd=cwd)
-cmd = "git commit -m 'test'"
+cmd = "git commit -m 'update output jasonshort'"
 subprocess.check_output(shlex.split(cmd), cwd=cwd)
 cmd = "git push origin master"
 subprocess.check_output(shlex.split(cmd), cwd=cwd)
