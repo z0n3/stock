@@ -51,7 +51,7 @@ for code in (errlist):
         os.remove(file)
         print('del '+file)
 getstockdayline.getstockdayline(errlist)
-print('[+]纠错完成，开始计算jasonshort策略... ...')
+print('[+]纠错完成，开始计算策略... ...')
 
 #计算jasonshort策略
 jasonshortmain.runjasonshort(logfile)
@@ -65,7 +65,7 @@ print('[+]完毕')
 cwd = "D:\\Users\\zhouyu835\\Downloads\\git\\stock"
 cmd = "git add -A"
 subprocess.check_output(shlex.split(cmd), cwd=cwd)
-cmd = "git commit -m 'update output jasonshort'"
+cmd = "git commit -m 'update strategy output {}'".format(strtoday)
 subprocess.check_output(shlex.split(cmd), cwd=cwd)
 cmd = "git push origin master"
 
