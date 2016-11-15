@@ -59,4 +59,12 @@ subprocess.check_output(shlex.split(cmd), cwd=cwd)
 cmd = "git commit -m 'update output jasonshort'"
 subprocess.check_output(shlex.split(cmd), cwd=cwd)
 cmd = "git push origin master"
-subprocess.check_output(shlex.split(cmd), cwd=cwd)
+
+def gitpush():
+    try:
+        time.sleep(5)
+        subprocess.check_output(shlex.split(cmd), cwd=cwd)
+    except:
+        gitpush()
+
+gitpush()
