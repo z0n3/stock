@@ -13,9 +13,7 @@ from core import get_stock_market
 from conf import stock_day_line_file
 from core import depickle_stock_list
 
-#log file句柄
-strtoday = datetime.now().strftime('%Y%m%d')
-logfile = open('{}.log'.format(strtoday),'w')
+
 
 def timetosleep():
     
@@ -53,6 +51,10 @@ for code in (errlist):
 getstockdayline.getstockdayline(errlist)
 print('[+]纠错完成，开始计算策略... ...')
 
+
+#log file句柄
+strtoday = datetime.now().strftime('%Y%m%d')
+logfile = open('{}.log'.format(strtoday),'w')
 #计算jasonshort策略
 jasonshortmain.runjasonshort(logfile)
 #计算mastd策略
