@@ -10,7 +10,7 @@ from core import depickle_stock_list
 
 
 #temp
-stocklist = ['601218','601933']
+stocklist = ['300016','601098']
 
 class mastd(Stock):
     '''
@@ -43,8 +43,10 @@ class mastd(Stock):
         #print(tmpma)
 
 
-def main():
-    file = open('mastd.log','w')
+def runmastd(logfile):
+    #file = open('mastd.log','w')
+    print('Mastd output' + ':\n')
+    logfile.write('\n\nMastd output' + ':\n')
     fig, ax1 = plt.subplots()
     ax2 = ax1.twinx()
     for code in depickle_stock_list():
@@ -53,7 +55,7 @@ def main():
             a.std()
             rate = a.stockdayline['mastdyz'][-20:].min()
             if a.stockdayline['close'].count() > 5*250:
-                #if rate < 1.05:
+                if rate < 1.05:
                     #plt绘图
                     ax1.plot(a.stockdayline.index,a.stockdayline['close'],color="red")
                     ax2.plot(a.stockdayline.index,a.stockdayline['13dmastdma'],color="blue")
@@ -61,12 +63,13 @@ def main():
                     plt.savefig('.\png\{}.png'.format(code), dpi=120)
                     ax1.cla()
                     ax2.cla()
-                    file.write(str(code) + ',' + '{:.5f}'.format(rate) + '\n')
+                    print(str(code) + ',' + '{:.5f}'.format(rate) + '\n')
+                    logfile.write(str(code) + ',' + '{:.5f}'.format(rate) + '\n')
         except:
             pass
-    file.close()
+    #file.close()
     
-a=mastd('600160')
+#a=mastd('600160')
 #a.std()
 #print(a.stockdayline['mastdyz'][-20:].min())
 #print(a.stockdayline[['mastdyz','13dmastdma']].to_csv('a.csv'))

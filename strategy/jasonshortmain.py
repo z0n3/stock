@@ -10,7 +10,7 @@ from core import get_stock_market
 
 
 #temp
-stocklist = ['002795','300519']
+stocklist = ['300016','601098']
 
 class jasonshort(Stock):
     '''
@@ -44,12 +44,12 @@ class jasonshort(Stock):
         #
         self.stockdayline['yz'] = (self.stockdayline['goldif'] & self.stockdayline['crossif'] & self.stockdayline['macdif'] & self.stockdayline['downif'] & self.stockdayline['beiliif'])
         
-def runjasonshort():
-    file = open('runjasonshort.log','w')
+def runjasonshort(logfile):
+    #file = open('runjasonshort.log','w')
     strtoday = datetime.datetime.now().strftime('%Y%m%d')
     today = pd.Timestamp(strtoday)
-    print('Jasonshort output at ' + strtoday + ':\n')
-    file.write('Jasonshort output at ' + strtoday + ':\n')
+    print('Jasonshort output' + ':\n')
+    logfile.write('Jasonshort output' + ':\n')
     for code in depickle_stock_list():
         if get_stock_market(code) in ['sh','sz']:
             try:
@@ -61,10 +61,10 @@ def runjasonshort():
                 c=b[b['span']==True]['date']
                 if (len(c)>0):
                     print(code+','+str(c[0])[:11]+'\n')
-                    file.write(code+','+str(c[0])[:11]+'\n')
+                    logfile.write(code+','+str(c[0])[:11]+'\n')
             except Exception as e:
                 pass
-    file.close()
+    #file.close()
     
 '''
 #test    
