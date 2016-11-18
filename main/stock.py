@@ -26,7 +26,8 @@ def timetosleep():
 
 
 #每天定时更新股票代码
-time.sleep(timetosleep())
+if timetosleep() > 0:
+    time.sleep(timetosleep())
 print('[+]开始更新股票代码')
 getstocklist.getstocklist()
 print('[+]更新股票代码完成')
