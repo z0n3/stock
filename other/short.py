@@ -2,10 +2,10 @@ import core
 import pylab as pl
 
 
-stock = core.Stock('600000')
+stock = core.Stock('000001')
 shdir = r'D:\zd_pazq\vipdoc\sh\lday\sh'
 szdir = r'D:\zd_pazq\vipdoc\sz\lday\sz'
-stock.readldayclose(shdir)
+stock.readldayclose(szdir)
 #print(type(stock.ldayvalue))
 #print(stock.ldayvalue[-1])
 
