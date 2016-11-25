@@ -59,9 +59,9 @@ print(len(level1),len(level2),len(level3))
 
 
 pl.plot([x['num'] for x in stock.ldayvalue],[y['High'] for y in stock.ldayvalue],'k')
-#pl.plot([x['num'] for x in level1],[y['High'] for y in level1],'r')
+pl.plot([x['num'] for x in level1],[y['High'] for y in level1],'r')
 #pl.plot([x['num'] for x in level2],[y['High'] for y in level2],'y')
-pl.plot([x['num'] for x in level3],[y['High'] for y in level3],'b')
+#pl.plot([x['num'] for x in level3],[y['High'] for y in level3],'b')
 pl.show()
 #print([int(x['Date']) for x in level1])
 
