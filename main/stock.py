@@ -18,7 +18,7 @@ from core import depickle_stock_list
 def timetosleep():
     
     curTime = datetime.now()
-    desTime = curTime.replace(hour=20, minute=0, second=0, microsecond=0)
+    desTime = curTime.replace(hour=19, minute=0, second=0, microsecond=0)
     delta = desTime - curTime
     skipSeconds =  delta.total_seconds()
     return skipSeconds
