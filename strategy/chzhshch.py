@@ -2,7 +2,7 @@ import pandas as pd
 import datetime
 import sys
 sys.path.append("..")
-from core import Stockfz
+from core import Stock30
 from core import depickle_stock_list
 from core import get_stock_market
 #from teststrategy import teststrategy
@@ -10,15 +10,15 @@ from core import get_stock_market
 
 
 #temp
-stocklist = ['601099','601398']
+stocklist = ['601099']
 
-class chzhshch(Stockfz):
+class chzhshch(Stock30):
     '''
     descript
     '''
     def __init__(self,code):
-        Stockfz.__init__(self,code)
-        Stockfz.getline(self,code)
+        Stock30.__init__(self,code)
+        Stock30.getline(self,code)
         self.ma(5)
         self.ma(10)
         self.macd(12,26,9)
@@ -81,6 +81,6 @@ def runchzhshch(logfile):
     logfile.close()
 
 #test
-logfile=open('chzhshch.log','w')
-runchzhshch(logfile)
+#logfile=open('chzhshch.log','w')
+#runchzhshch(logfile)
     

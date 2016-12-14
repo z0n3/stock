@@ -14,7 +14,7 @@ from conf import stock_day_line_file
 from core import depickle_stock_list
 
 
-
+'''
 def timetosleep():
     
     curTime = datetime.now()
@@ -52,7 +52,7 @@ for code in (errlist):
 getstockdayline.getstockdayline(errlist)
 print('[+]纠错完成，开始计算策略... ...')
 
-
+'''
 #log file句柄
 strtoday = datetime.now().strftime('%Y%m%d')
 logfile = open('{}.log'.format(strtoday),'w')
@@ -63,7 +63,7 @@ mastdmain.runmastd(logfile)
 
 logfile.close()
 print('[+]完毕')
-
+'''
 #git部分
 cwd = "D:\\Users\\zhouyu835\\Downloads\\git\\stock"
 cmd = "git add -A"
@@ -80,3 +80,4 @@ def gitpush():
         gitpush()
 
 gitpush()
+'''

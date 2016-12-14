@@ -19,6 +19,7 @@ class jasonshort(Stock):
     '''
     def __init__(self,code,stopgain=0.05,stoploss=-0.02,holdday=3):
         Stock.__init__(self,code)
+        Stock.getline(self,code)
         self.ma(5)
         self.ma(10)
         self.macd(12,26,9)

@@ -33,6 +33,9 @@ class Stock(object):
     init: Stock('600000')
     '''
     def __init__(self,code):
+        pass
+    
+    def getline(self,code):
         prefix = get_stock_market(code)
         if prefix not in ['sh','sz']:
             #print('The stock is not tradeable.')
@@ -111,13 +114,13 @@ class Stock(object):
         self.stockdayline['ifshallow'] = (0.03 > abs(percent))
     '''        
         
-class Stockfz(object):
+class Stockfz(Stock):
     '''
-    Stock class
+    5分钟数据
     init: Stock('600000')
     '''
     def __init__(self,code):
-        pass
+        Stock.__init__(self,code)
     
     def getline(self,code):
         prefix = get_stock_market(code)
@@ -133,7 +136,7 @@ class Stockfz(object):
         index_tmp.sort()
         data = data.reindex(index_tmp)
         self.stockdayline = data
-
+'''
     def ma(self,days):
         self.stockdayline[str(days)+'dma'] = self.stockdayline['close'].rolling(center=False,window=days).mean()
 
@@ -151,9 +154,34 @@ class Stockfz(object):
         self.stockdayline['macd'] = 2 * (self.stockdayline['macd_dif'] - self.stockdayline['macd_dea'])
         del self.stockdayline[str(short)+'ema']   
         del self.stockdayline[str(long)+'ema']        
+'''        
         
+class Stock30(Stock):
+    '''
+    30分钟数据
+    init: Stock('600000')
+    '''
+    def __init__(self,code):
+        Stock.__init__(self,code)
+    
+    def getline(self,code):
+        prefix = get_stock_market(code)
+        if prefix not in ['sh','sz']:
+            #print('The stock is not tradeable.')
+            return
+        file_open = stock_fz_line_file + prefix + code + '.csv'
+        data = pd.read_csv(file_open, header=None, sep = ',', names = stock_fz_line_headers, index_col = 0)
+        del data['non']
+        data = data.set_index(pd.to_datetime(data.index))
         
-        
+        index_tmp = list(data.index)
+        index_tmp.sort()
+        data = data.reindex(index_tmp)
+        #5minto30min
+        ohlc_dict = {'open':'first','high':'max','low':'min','close':'last','amount':'sum','vol':'sum'}
+        data = data.resample('30Min',how=ohlc_dict,closed='right',label='right')
+        data = data.dropna()
+        self.stockdayline = data        
         
         
         
