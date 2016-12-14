@@ -1,12 +1,9 @@
-import pandas as pd
-import datetime
 import sys
 sys.path.append("..")
 from core import Stock30
 from core import depickle_stock_list
 from core import get_stock_market
-#from teststrategy import teststrategy
-#from teststrategy import holdgainloss
+
 
 
 #temp
@@ -25,15 +22,15 @@ class chzhshch(Stock30):
         self.fzline={'low':list(reversed(list(self.stockdayline['low']))),'macd':list(reversed(list(self.stockdayline['macd']))),'macd_dea':list(reversed(list(self.stockdayline['macd_dea'])))}
     
     def test(self):
-        if self.fzline['macd'][0] > 0:
+        if self.fzline['macd'][0] >= 0:
             return False
-        if self.fzline['macd'][1] > 0:
+        if self.fzline['macd'][1] >= 0:
             return False
-        if self.fzline['macd'][2] > 0:
+        if self.fzline['macd'][2] >= 0:
             return False
-        if self.fzline['macd'][0] < self.fzline['macd'][1]:
+        if self.fzline['macd'][0] <= self.fzline['macd'][1]:
             return False
-        if self.fzline['macd'][1] > self.fzline['macd'][2]:
+        if self.fzline['macd'][1] >= self.fzline['macd'][2]:
             return False
             
         i = 0
@@ -55,7 +52,7 @@ class chzhshch(Stock30):
         if min(self.fzline['low'][0:i1]) >= min(self.fzline['low'][i2:i3]):
             return False
         
-        if sum(self.fzline['macd'][1:i1]) * 2 > sum(self.fzline['macd'][i2:i3]):
+        if sum(self.fzline['macd'][1:i1]) * 2 >= sum(self.fzline['macd'][i2:i3]):
             return False
         
         return True

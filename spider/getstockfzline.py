@@ -1,10 +1,11 @@
 import struct
+import os
+import time
 import sys
 sys.path.append("..")
 from core import get_stock_market
 from conf import stock_fz_line_file
 from conf import tdx_fz_line_file
-from getstocklist import getstocklist
 from core import depickle_stock_list
 
 Daylength = 32 # one day data is 32 byte.
@@ -14,6 +15,10 @@ def getstockfzline(stocklist):
     '''
     读取通达信5分钟数据
     '''
+    for root, dirs, files in os.walk(stock_fz_line_file):
+        for file in files:
+            os.remove(root+file)
+    time.sleep(3)
     for code in (stocklist):
         prefix = get_stock_market(code)
         if prefix in ['sh','sz']: 
@@ -41,13 +46,12 @@ def getstockfzline(stocklist):
                     #print(tmpdata)
         
                     count += 1
-                    #if count > 50:break
+                    if count > 187:break
                 file_o.close()
                 file_w.close()
             except:
                 pass
-            #print(fileo)
 
 
-getstockfzline(depickle_stock_list())
-#getstocklist()
+if __name__ == "__main__":
+    getstockfzline(depickle_stock_list())
