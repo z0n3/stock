@@ -7,7 +7,7 @@ from core import get_stock_market
 
 
 #temp
-stocklist = ['601099']
+stocklist = ['600482']
 
 class chzhshch(Stock30):
     '''
@@ -52,7 +52,7 @@ class chzhshch(Stock30):
         if min(self.fzline['low'][0:i1]) >= min(self.fzline['low'][i2:i3]):
             return False
         
-        if sum(self.fzline['macd'][1:i1]) * 2 >= sum(self.fzline['macd'][i2:i3]):
+        if sum(self.fzline['macd'][1:i1]) * 2 <= sum(self.fzline['macd'][i2:i3]):
             return False
         
         return True
@@ -77,7 +77,7 @@ def runchzhshch(logfile):
                 pass
     logfile.close()
 
-#test
-#logfile=open('chzhshch.log','w')
-#runchzhshch(logfile)
-    
+
+if __name__ == "__main__":
+    logfile=open('chzhshch.log','w')
+    runchzhshch(logfile)

@@ -46,7 +46,7 @@ def getstockfzline(stocklist):
                     #print(tmpdata)
         
                     count += 1
-                    if count > 187:break
+                    #if count > 187:break
                 file_o.close()
                 file_w.close()
             except:
