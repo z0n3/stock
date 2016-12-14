@@ -44,9 +44,9 @@ class chzhshch(Stock30):
             i=i+1
         i3 = i
         #print(i1,i2,i3)
-        if i2 - i1 < 5:
+        if i2 - i1 <= 5:
             return False
-        if i3 - i2 < 5:
+        if i3 - i2 <= 5:
             return False
         
         if min(self.fzline['low'][0:i1]) >= min(self.fzline['low'][i2:i3]):
