@@ -6,7 +6,8 @@ import sys
 sys.path.append("..")
 from spider import getstocklist
 from spider import getstockfzline
-from strategy import chzhshch
+from strategy import chzhshch30mB1
+from strategy import chzhshch30mB3
 from core import depickle_stock_list
 
 
@@ -24,12 +25,14 @@ print('[+]全面股票数据更新完成，开始计算策略... ...')
 
 #log file句柄
 strtoday = datetime.now().strftime('%Y%m%d')
-logfile = open('{}_chzhshch.log'.format(strtoday),'w')
+logfile = open('{}_chzhshch_30m_B1.log'.format(strtoday),'w')
 #计算chzhshch策略
-chzhshch.runchzhshch(logfile)
-
-
+chzhshch30mB1.runchzhshch(logfile)
 logfile.close()
+logfile = open('{}_chzhshch_30m_B3.log'.format(strtoday),'w')
+chzhshch30mB3.runchzhshch(logfile)
+logfile.close()
+
 print('[+]完毕')
 
 #git部分

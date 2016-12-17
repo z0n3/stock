@@ -62,8 +62,8 @@ class chzhshch(Stock30):
 def runchzhshch(logfile):
     #strtoday = datetime.datetime.now().strftime('%Y%m%d')
     #today = pd.Timestamp(strtoday)
-    print('chzhshch output' + ':\n')
-    logfile.write('chzhshch output' + ':\n')
+    print('chzhshch_30m_B1 output' + ':\n')
+    logfile.write('chzhshch_30m_B1 output' + ':\n')
     for code in depickle_stock_list():
         if get_stock_market(code) in ['sh','sz']:
             try:
@@ -74,7 +74,7 @@ def runchzhshch(logfile):
                     logfile.write(code+'\n')
 
             except Exception as e:
-                pass
+                print(e)
     logfile.close()
 
 
