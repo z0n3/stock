@@ -60,8 +60,8 @@ class chzhshch(Stock30):
         #while (self.fzline['5dma'][i] - self.fzline['10dma'][i])*(self.fzline['5dma'][i+1] - self.fzline['10dma'][i+1])>0:
         #    i=i+1
         #cross5 = i
-        if cross4 < 20:
-            return False
+        #if cross4 < 20:
+        #    return False
         if max(self.fzline['high'][cross1:(cross4+5)]) >= self.fzline['low'][0]:
             return False
         if self.fzline['5dma'][cross4] <= self.fzline['5dma'][cross1]:
@@ -86,9 +86,10 @@ def runchzhshch(logfile):
 
             except Exception as e:
                 pass
-    logfile.close()
+    
 
 
 if __name__ == "__main__":
     logfile=open('chzhshch.log','w')
     runchzhshch(logfile)
+    logfile.close()

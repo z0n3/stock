@@ -60,8 +60,8 @@ class chzhshch(Stock):
         #while (self.fzline['5dma'][i] - self.fzline['10dma'][i])*(self.fzline['5dma'][i+1] - self.fzline['10dma'][i+1])>0:
         #    i=i+1
         #cross5 = i
-        if cross4 < 20:
-            return False
+        #if cross4 < 20:
+        #    return False
         if max(self.fzline['high'][cross1:(cross4+5)]) >= self.fzline['low'][0]:
             return False
         if self.fzline['5dma'][cross4] <= self.fzline['5dma'][cross1]:
