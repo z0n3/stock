@@ -7,6 +7,7 @@ import sys
 sys.path.append("..")
 from strategy import jasonshortmain
 from strategy import mastdmain
+from strategy import chzhshchdayB1
 from strategy import chzhshchdayB3
 from spider import getstocklist
 from spider import getstockdayline
@@ -57,6 +58,8 @@ print('[+]纠错完成，开始计算策略... ...')
 #log file句柄
 strtoday = datetime.now().strftime('%Y%m%d')
 logfile = open('{}.log'.format(strtoday),'w')
+#计算chzhshch日线B1策略
+chzhshchdayB1.runchzhshch(logfile)
 #计算chzhshch日线B3策略
 chzhshchdayB3.runchzhshch(logfile)
 #计算jasonshort策略
