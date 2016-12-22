@@ -75,7 +75,7 @@ def runchzhshch(logfile):
 
             except Exception as e:
                 pass
-    logfile.close()
+    #logfile.close()
 
 
 if __name__ == "__main__":
