@@ -71,7 +71,7 @@ def getstockdayline(stocklist):
         #print(code,lasteddate,type(lasteddate))
         if prefix in ['sh','sz']:
             try:
-                for year in range(2016,1989,-1):#1989
+                for year in range(2017,1989,-1):#1989
                     for season in range(4,0,-1):
                         if stop_catch:
                             break
