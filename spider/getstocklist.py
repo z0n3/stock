@@ -24,3 +24,6 @@ def getstocklist():
     stock_list_pkl.close()
     
     #print(stock_list)
+    
+if __name__ == "__main__":
+    getstocklist()

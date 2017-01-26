@@ -52,7 +52,21 @@ class Stock(object):
         self.stockdayline = data
         self.stockdayline['percent'] = self.stockdayline['close'] / self.stockdayline['close'].shift(1) - 1
 
+    def drop(self):
+        self.stockdayline['upif'] = (self.stockdayline['high'] > self.stockdayline['high'].shift(1)) & (self.stockdayline['low'] > self.stockdayline['low'].shift(1))
+        self.stockdayline['dropif'] = (self.stockdayline['high'] < self.stockdayline['high'].shift(1)) & (self.stockdayline['low'] > self.stockdayline['low'].shift(1))
+        dropcount = self.stockdayline[self.stockdayline['dropif']==True]['dropif'].count()
+        self.stockdayline.loc[(self.stockdayline['dropif'].shift(-1)==True) & (self.stockdayline['upif']==True),'low']  = self.stockdayline['low'].shift(-1)
+        self.stockdayline.loc[(self.stockdayline['dropif'].shift(-1)==True) & (self.stockdayline['upif']==False),'high']  = self.stockdayline['high'].shift(-1)
+        self.stockdayline = self.stockdayline[self.stockdayline['dropif']==False]
+        del self.stockdayline['upif']
+        del self.stockdayline['dropif']
+
+        return dropcount
     
+    def markgd(self):
+        pass
+        
     def openrev(self):
         '''
         base the sell day
