@@ -62,10 +62,7 @@ logfile = open('{}.log'.format(strtoday),'w')
 chzhshchdayB1.runchzhshch(logfile)
 #计算chzhshch日线B3策略
 chzhshchdayB3.runchzhshch(logfile)
-#计算jasonshort策略
-jasonshortmain.runjasonshort(logfile)
-#计算mastd策略
-mastdmain.runmastd(logfile)
+
 
 
 logfile.close()

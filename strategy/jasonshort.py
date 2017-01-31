@@ -1,6 +1,6 @@
 import sys
 sys.path.append("..")
-from core import Stock
+from core import Stock30
 from core import depickle_stock_list
 from core import get_stock_market
 
@@ -9,17 +9,15 @@ from core import get_stock_market
 #temp
 stocklist = ['600482']
 
-class chzhshch(Stock):
+class jasonshort(Stock30):
     '''
-    descript
+    depend 30fz line 
     '''
     def __init__(self,code):
-        Stock.__init__(self,code)
-        Stock.getline(self,code)
-        self.ma(5)
-        self.ma(10)
+        Stock30.__init__(self,code)
+        Stock30.getline(self,code)
         self.macd(12,26,9)
-        self.fzline={'low':list(reversed(list(self.stockdayline['low']))),'macd':list(reversed(list(self.stockdayline['macd']))),'macd_dea':list(reversed(list(self.stockdayline['macd_dea'])))}
+        self.fzline={'low':list(reversed(list(self.stockdayline['low']))),'macd':list(reversed(list(self.stockdayline['macd']))),'open':list(reversed(list(self.stockdayline['open']))),'close':list(reversed(list(self.stockdayline['close'])))}
     
     def test(self):
         if self.fzline['macd'][0] >= 0:
@@ -32,6 +30,12 @@ class chzhshch(Stock):
             return False
         if self.fzline['macd'][1] >= self.fzline['macd'][2]:
             return False
+        if self.fzline['low'][0] <= self.fzline['low'][1]:
+            return False
+        if self.fzline['low'][1] >= self.fzline['low'][2]:
+            return False
+        if self.fzline['close'][1] >= self.fzline['open'][1]:
+            return False        
             
         i = 0
         while(self.fzline['macd'][i] < 0):
@@ -49,7 +53,7 @@ class chzhshch(Stock):
         if i3 - i2 <= 5:
             return False
         
-        if min(self.fzline['low'][0:i1]) >= min(self.fzline['low'][i2:i3]):
+        if self.fzline['low'][1] >= min(self.fzline['low'][i1:i3]):
             return False
         
         if sum(self.fzline['macd'][1:i1]) * 2 >= sum(self.fzline['macd'][i2:i3]):
@@ -59,15 +63,15 @@ class chzhshch(Stock):
                 
         
         
-def runchzhshch(logfile):
+def runjasonshort(logfile):
     #strtoday = datetime.datetime.now().strftime('%Y%m%d')
     #today = pd.Timestamp(strtoday)
-    print('chzhshch_day_B1 output' + ':\n')
-    logfile.write('chzhshch_day_B1 output' + ':\n')
+    print('chzhshch_30m_jasonshort output' + ':\n')
+    logfile.write('chzhshch_30m_jasonshort output' + ':\n')
     for code in depickle_stock_list():
         if get_stock_market(code) in ['sh','sz']:
             try:
-                a=chzhshch(code)
+                a=jasonshort(code)
                 out = a.test()
                 if out:
                     print(code)
@@ -75,9 +79,9 @@ def runchzhshch(logfile):
 
             except Exception as e:
                 pass
-    #logfile.close()
+    logfile.close()
 
 
 if __name__ == "__main__":
     logfile=open('chzhshch.log','w')
-    runchzhshch(logfile)
+    runjasonshort(logfile)        

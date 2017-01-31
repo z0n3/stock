@@ -18,7 +18,8 @@ def get_stock_market(code):
     '''
     if code.startswith(('600','601','603')):
         return('sh')
-    elif code.startswith(('000','002','300')):
+    #elif code.startswith(('000','002','300')):
+    elif code.startswith(('000','002')):
         return('sz')
     else:
         return('other')
