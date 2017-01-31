@@ -7,7 +7,7 @@ from core import get_stock_market
 
 
 #temp
-stocklist = ['600482']
+stocklist = ['600066']
 
 class jasonshort(Stock30):
     '''
@@ -48,7 +48,7 @@ class jasonshort(Stock30):
             i=i+1
         i3 = i
         #print(i1,i2,i3)
-        if i2 - i1 <= 5:
+        if i2 - i1 <= 3:
             return False
         if i3 - i2 <= 5:
             return False
@@ -56,9 +56,8 @@ class jasonshort(Stock30):
         if self.fzline['low'][1] >= min(self.fzline['low'][i1:i3]):
             return False
         
-        if sum(self.fzline['macd'][1:i1]) * 2 >= sum(self.fzline['macd'][i2:i3]):
+        if sum(self.fzline['macd'][1:i1]) * 2 <= sum(self.fzline['macd'][i2:i3]):
             return False
-        
         return True
                 
         

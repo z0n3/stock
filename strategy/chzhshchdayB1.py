@@ -52,7 +52,7 @@ class chzhshch(Stock):
         if min(self.fzline['low'][0:i1]) >= min(self.fzline['low'][i2:i3]):
             return False
         
-        if sum(self.fzline['macd'][1:i1]) * 2 >= sum(self.fzline['macd'][i2:i3]):
+        if sum(self.fzline['macd'][1:i1]) * 2 <= sum(self.fzline['macd'][i2:i3]):
             return False
         
         return True
