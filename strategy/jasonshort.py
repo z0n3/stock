@@ -13,9 +13,12 @@ class jasonshort(Stock30):
     '''
     depend 30fz line 
     '''
-    def __init__(self,code):
+    def __init__(self,code,trading):
         Stock30.__init__(self,code)
         Stock30.getline(self,code)
+        if trading:
+            self.stockdayline = self.stockdayline[:-1]
+        #self.stockdayline.to_csv('a.csv')
         self.macd(12,26,9)
         self.fzline={'low':list(reversed(list(self.stockdayline['low']))),'macd':list(reversed(list(self.stockdayline['macd']))),'open':list(reversed(list(self.stockdayline['open']))),'close':list(reversed(list(self.stockdayline['close'])))}
     
@@ -62,15 +65,16 @@ class jasonshort(Stock30):
                 
         
         
-def runjasonshort(logfile):
+def runjasonshort(logfile,trading):
     #strtoday = datetime.datetime.now().strftime('%Y%m%d')
     #today = pd.Timestamp(strtoday)
+
     print('chzhshch_30m_jasonshort output' + ':\n')
     logfile.write('chzhshch_30m_jasonshort output' + ':\n')
     for code in depickle_stock_list():
         if get_stock_market(code) in ['sh','sz']:
             try:
-                a=jasonshort(code)
+                a=jasonshort(code,trading)
                 out = a.test()
                 if out:
                     print(code)
@@ -78,9 +82,9 @@ def runjasonshort(logfile):
 
             except Exception as e:
                 pass
-    logfile.close()
+    #logfile.close()
 
 
 if __name__ == "__main__":
     logfile=open('chzhshch.log','w')
-    runjasonshort(logfile)        
+    runjasonshort(logfile,trading)        
