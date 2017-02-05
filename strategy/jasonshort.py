@@ -7,7 +7,7 @@ from core import get_stock_market
 
 
 #temp
-stocklist = ['600066']
+stocklist = ['600068']
 
 class jasonshort(Stock30):
     '''
@@ -81,10 +81,11 @@ def runjasonshort(logfile,trading):
                     logfile.write(code+'\n')
 
             except Exception as e:
-                pass
-    #logfile.close()
+                print(e)
+
 
 
 if __name__ == "__main__":
     logfile=open('chzhshch.log','w')
-    runjasonshort(logfile,trading)        
+    runjasonshort(logfile,False)        
+    logfile.close()

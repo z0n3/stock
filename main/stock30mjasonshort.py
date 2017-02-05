@@ -23,7 +23,7 @@ time.sleep(3)
 #更新股票数据
 print('[+]开始更新全面股票数据... ...')
 getstockfzline.getstockfzline(depickle_stock_list())
-print('[+]全面股票数据更新完成，开始计算策略... ...')
+print('[+]开始计算策略... ...')
 
 
 

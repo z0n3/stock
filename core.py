@@ -1,4 +1,5 @@
 import pickle
+import struct
 import pandas as pd
 import sys
 sys.path.append("..")
@@ -7,6 +8,7 @@ from conf import stock_day_line_headers
 from conf import stock_fz_line_file
 from conf import stock_fz_line_headers
 from conf import stock_list_pkl_file
+from conf import tdx_fz_line_file
 
 def depickle_stock_list():
     stock_list_pkl = open(stock_list_pkl_file,'rb')
@@ -198,7 +200,57 @@ class Stock30(Stock):
         data = data.dropna()
         self.stockdayline = data        
         
-        
+    def getline_tmp(self,code):
+        prefix = get_stock_market(code)
+        if prefix not in ['sh','sz']:
+            #print('The stock is not tradeable.')
+            return
+        Daylength = 32 # one day data is 32 byte.
+        try:
+            file_to_o = tdx_fz_line_file + '/' + prefix + '/fzline' + '/' + prefix + code + '.lc5'
+            file_o = open ( file_to_o, "rb" )
+            count = 0
+            tmpopen = []
+            tmphigh = []
+            tmplow = []
+            tmpclose = []
+            tmpamount = []
+            tmpvol = []
+            tmpdatetime = []
+            while( file_o.seek( -(count + 1) * Daylength, 2 ) ):
+                tmpfz = struct.unpack('hhfffffii', file_o.read(32))
+                tmpdatetime.append('{}-{}-{} {:0>2}:{:0>2}:00'.format(tmpfz[0]//2048+2004,tmpfz[0]%2048//100,tmpfz[0]%2048%100,tmpfz[1]//60,tmpfz[1]%60))
+                tmpopen.append('{:.2f}'.format(tmpfz[2]))   #open
+                tmphigh.append('{:.2f}'.format(tmpfz[3]))   #high
+                tmplow.append('{:.2f}'.format(tmpfz[4]))   #low
+                tmpclose.append('{:.2f}'.format(tmpfz[5]))   #close
+                #tmpamount.append('{:.2f}'.format(tmpfz[6]))   #amount
+                tmpamount.append(tmpfz[6])   #amount
+                tmpvol.append(tmpfz[7])   #vol
+                
+
+                #print(tmpopen)
+    
+                count += 1
+            file_o.close()
+        except Exception as e:
+            return
+            
+        #print(tmpopen)    
+        tmpdata = {'open':tmpopen,'high':tmphigh,'low':tmplow,'close':tmpclose,'amount':tmpamount,'vol':tmpvol}
+        data = pd.DataFrame(tmpdata,index=tmpdatetime)
+        #print(data.head())
+        index_tmp = list(data.index)
+        index_tmp.sort()
+        data = data.reindex(index_tmp)
+        data.index = pd.to_datetime(data.index)
+        #print(data.head())
+        #5minto30min
+        ohlc_dict = {'open':'first','high':'max','low':'min','close':'last','amount':'sum','vol':'sum'}
+        data = data.resample('30Min',how=ohlc_dict,closed='right',label='right')
+        data = data.dropna()
+        #print(data.head())
+        self.stockdayline = data               
         
         
         
