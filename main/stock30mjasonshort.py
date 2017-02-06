@@ -16,7 +16,7 @@ else:
     trading = False
         
 print('[+]开始更新股票代码')
-getstocklist.getstocklist()
+#getstocklist.getstocklist()
 print('[+]更新股票代码完成')
 time.sleep(3)
 
@@ -36,7 +36,7 @@ logfile.close()
 
 
 print('[+]完毕')
-
+'''
 #git部分
 cwd = "D:\\Users\\zhouyu835\\Downloads\\git\\stock"
 #cwd = "C:\\Users\\Jason\\Downloads\\git\\stock"
@@ -54,3 +54,4 @@ def gitpush():
         gitpush()
 
 gitpush()
+'''
