@@ -56,8 +56,8 @@ class jasonshort(Stock30):
         if i3 - i2 <= 5:
             return False
         
-        if self.fzline['low'][1] >= min(self.fzline['low'][i1:i3]):
-            return False
+        #if self.fzline['low'][1] >= min(self.fzline['low'][i1:i3]):
+        #    return False
         
         if sum(self.fzline['macd'][1:i1]) * 2 <= sum(self.fzline['macd'][i2:i3]):
             return False
