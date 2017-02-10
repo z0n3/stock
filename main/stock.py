@@ -5,8 +5,6 @@ import subprocess
 import os
 import sys
 sys.path.append("..")
-from strategy import jasonshortmain
-from strategy import mastdmain
 from strategy import chzhshchdayB1
 from strategy import chzhshchdayB3
 from spider import getstocklist
