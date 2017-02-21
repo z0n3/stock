@@ -13,6 +13,7 @@ def minchoice(logfile):
     print('minchoice output' + ':\n')
     logfile.write('minchoice output' + ':\n')
     for code in depickle_stock_list():
+        #print(code)
         market = get_stock_market(code)
         if market in ['sh','sz']:
             try:
@@ -28,17 +29,17 @@ def minchoice(logfile):
                 for n in range(15):
                     if stk.limitup( n ): upcount += 1
                 #print(upcount)
-                if upcount < 3: return False
-                
-                gd = stk.gaodian(0,14)
-                #print(stk.ldayvalue[0]["Close"] / gd)
-                if stk.ldayvalue[0]["Close"] / gd < 0.85:
+                if upcount >= 3:
                     
-                    print(code)
-                    logfile.write(code+'\n')
+                    gd = stk.gaodian(0,14)
+                    #print(stk.ldayvalue[0]["Close"] / gd)
+                    if stk.ldayvalue[0]["Close"] / gd < 0.85:
+                        
+                        print(code)
+                        logfile.write(code+'\n')
     
             except Exception as e:
-                print(e)
+                pass#print(e)
 
 if __name__ == "__main__":
     logfile=open('minchoice.log','w')
