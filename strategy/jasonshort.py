@@ -7,7 +7,7 @@ from core import get_stock_market
 
 
 #temp
-stocklist = ['600068']
+stocklist = ['600172']
 
 class jasonshort(Stock30):
     '''

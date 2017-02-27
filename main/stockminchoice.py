@@ -1,5 +1,6 @@
 #import struct
 from StockClass import Stock
+from datetime import datetime
 from conf import tdx_fz_line_file
 from core import depickle_stock_list
 from core import get_stock_market
@@ -42,6 +43,7 @@ def minchoice(logfile):
                 pass#print(e)
 
 if __name__ == "__main__":
-    logfile=open('minchoice.log','w')
+    strtoday = datetime.now().strftime('%Y%m%d')
+    logfile = open('{}_minchoice.log'.format(strtoday),'w')
     minchoice(logfile)        
     logfile.close()

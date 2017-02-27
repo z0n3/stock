@@ -5,7 +5,9 @@ import sys
 sys.path.append("..")
 from conf import stock_day_line_file
 from conf import stock_day_line_headers
+from conf import stock_tdx_day_line_headers
 from conf import stock_fz_line_file
+from conf import stock_tdx_day_line_file
 from conf import stock_fz_line_headers
 from conf import stock_list_pkl_file
 from conf import tdx_fz_line_file
@@ -255,7 +257,37 @@ class Stock30(Stock):
         
         
         
+class StockW(Stock):
+    '''
+    周数据
+    init: Stock('600000')
+    '''
+    def __init__(self,code):
+        Stock.__init__(self,code)
+    
+    def getline(self,code):
+        prefix = get_stock_market(code)
+        if prefix not in ['sh','sz']:
+            #print('The stock is not tradeable.')
+            return
+        file_open = stock_tdx_day_line_file + prefix + code + '.csv'
+        data = pd.read_csv(file_open, header=None, sep = ',', names = stock_tdx_day_line_headers, index_col = 0)
+        del data['non']
+        #print(data.index.astype('str'))
+        data = data.set_index(pd.to_datetime(data.index.astype('str')))
         
+        index_tmp = list(data.index)
+        index_tmp.sort()
+        data = data.reindex(index_tmp)
+        #print(data)
+        #daytow
+        ohlc_dict = {'open':'first','high':'max','low':'min','close':'last','amount':'sum','vol':'sum'}
+        data = data.resample('W',how=ohlc_dict)#,closed='right',label='right')
+        data = data.dropna()
+        self.stockdayline = data        
+        
+         
+                
         
         
         
