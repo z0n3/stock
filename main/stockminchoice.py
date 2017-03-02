@@ -1,6 +1,8 @@
 #import struct
 from StockClass import Stock
 from datetime import datetime
+import sys
+sys.path.append("..")
 from conf import tdx_fz_line_file
 from core import depickle_stock_list
 from core import get_stock_market
