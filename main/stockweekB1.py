@@ -6,7 +6,7 @@ import sys
 sys.path.append("..")
 from spider import getstocklist
 from spider import getstocktdxdayline
-from strategy import jasonlong
+from strategy import chzhshchweekB1
 from core import depickle_stock_list
 
 trade = input("Is it workday? (y/n):    ")
@@ -15,7 +15,6 @@ if trade != "n":
 else:
     trading = False
         
-    
 print('[+]开始更新股票代码')
 #getstocklist.getstocklist()
 print('[+]更新股票代码完成')
@@ -30,9 +29,9 @@ print('[+]开始计算策略... ...')
 
 #log file句柄
 strtoday = datetime.now().strftime('%Y%m%d')
-logfile = open('{}_chzhshch_w_jasonlong.log'.format(strtoday),'w')
+logfile = open('{}_chzhshch_week_B1_output.log'.format(strtoday),'w')
 #计算chzhshch策略
-jasonlong.runjasonlong(logfile,trading)
+chzhshchweekB1.runchzhshchweekB1(logfile,trading)
 logfile.close()
 
 
