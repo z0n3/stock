@@ -15,7 +15,6 @@ if trade != "n":
 else:
     trading = False
         
-    
 print('[+]开始更新股票代码')
 #getstocklist.getstocklist()
 print('[+]更新股票代码完成')
